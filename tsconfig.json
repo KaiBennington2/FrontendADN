@@ -13,32 +13,16 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2015",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2018",
-      "dom"
-    ],
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es2018", "dom"],
     "paths": {
-      "@core/*": [
-        "src/app/core/*"
-      ],
-      "@core-service/*": [
-        "src/app/core/services/*"
-      ],
-      "@home/*": [
-        "src/app/feature/home/*"
-      ],
-      "@producto/*": [
-        "src/app/feature/producto/*"
-      ],
-      "@shared/*": [
-        "src/app/shared/*"
-      ],
-      "@assets/*": [
-        "src/assets/*"
-      ]
+      "@core/*": ["src/app/core/*"],
+      "@core-service/*": ["src/app/core/services/*"],
+      "@home/*": ["src/app/feature/home/*"],
+      "@producto/*": ["src/app/feature/producto/*"],
+      "@cliente/*": ["src/app/feature/cliente/*"],
+      "@shared/*": ["src/app/shared/*"],
+      "@assets/*": ["src/assets/*"]
     }
   },
   "angularCompilerOptions": {

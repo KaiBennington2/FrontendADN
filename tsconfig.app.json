@@ -17,6 +17,9 @@
       "@producto/*": [
         "src/app/feature/producto/*"
       ],
+      "@cliente/*": [
+        "src/app/feature/cliente/*"
+      ],
       "@shared/*": [
         "src/app/shared/*"
       ]
