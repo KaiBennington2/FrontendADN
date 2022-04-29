@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { faContao } from '@fortawesome/free-brands-svg-icons';
-import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { faPencilAlt, faSearch, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { Observable } from 'rxjs';
+
+import { Cliente } from '@cliente/shared/model/cliente';
+import { ClienteService } from '@cliente/shared/service/cliente.service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-cliente',
@@ -9,12 +13,23 @@ import { faBell } from '@fortawesome/free-solid-svg-icons';
 })
 export class ClienteComponent implements OnInit {
 
-  public faHome = faContao;
-  public faBell = faBell;
+  public icons: any[] = [faSearch,faPencilAlt,faTrashAlt];
+  public listaClientes: Observable<Cliente[]>;
 
-  constructor() { }
+  public pagActual: number = 0;
+  public totalClientes: number = 0;
+  public maxPorPag:number = 5;
+
+  public buscar: string = '';
+
+  constructor(protected clienteService: ClienteService, public modal:NgbActiveModal) { }
 
   ngOnInit(): void {
+    this.listaClientes = this.clienteService.consultar();
+    this.listaClientes.subscribe(result => {this.totalClientes= result.length});
   }
 
+  alert(){
+    alert('eliminando');
+  }
 }

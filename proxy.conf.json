@@ -2,6 +2,10 @@
   "/prospectos-vida": {
     "target": "http://192.168.1.115:9002",
     "logLevel": "debug"
+  },
+  "/contratos": {
+    "target": "http://localhost:8000",
+    "logLevel": "debug"
   }
 
 }

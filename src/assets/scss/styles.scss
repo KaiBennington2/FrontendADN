@@ -1,3 +1,6 @@
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+//modules
 @import "./modules/var";
 @import "./modules/mixins";
 @import "./modules/utility";
@@ -8,6 +11,3 @@
 @import "./partials/global";
 @import "./partials/buttons";
 @import "./partials/typography";
-/* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
-

@@ -7,8 +7,11 @@ import { MensajeErrorCamposContenedorDirective } from './directivas/error-campos
 import { ErrorCamposPlantillaComponent } from './directivas/error-campos/componente/error-campos-plantilla.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TrackByPipe } from './pipe/track-by.pipe';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+import * as formsComponents from './directivas';
+import * as pipesComponents from './pipe';
 
 @NgModule({
   declarations: [
@@ -16,9 +19,12 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MensajeErrorCamposDirective,
     MensajeErrorCamposContenedorDirective,
     MensajeErrorCamposSubmitDirective,
-    TrackByPipe
+    TrackByPipe,
+    ...formsComponents.components,
+    ...pipesComponents.pipes
+    
   ],
-  imports: [ReactiveFormsModule, FormsModule, NgbModule, FontAwesomeModule],
+  imports: [ReactiveFormsModule, FormsModule, FontAwesomeModule, NgbModule],
   exports: [
     CommonModule,
     HttpClientModule,
@@ -28,8 +34,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ReactiveFormsModule,
     FormsModule,
     TrackByPipe,
-    NgbModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ...formsComponents.components,
+    ...pipesComponents.pipes,
+    NgbModule
   ]
 })
 export class SharedModule { }

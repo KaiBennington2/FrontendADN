@@ -8,6 +8,7 @@ import { ProductoModule } from '@producto/producto.module';
 import { CoreModule } from '@core/core.module';
 import { CookieService } from 'ngx-cookie-service';
 import { SharedModule } from '@shared/shared.module';
+import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent],
@@ -16,10 +17,11 @@ import { SharedModule } from '@shared/shared.module';
     AppRoutingModule,
     ProductoModule,
     CoreModule,
-    SharedModule,
+    SharedModule
   ],
   providers: [
-    CookieService
+    CookieService,
+    { provide: LocationStrategy, useClass: PathLocationStrategy}
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
