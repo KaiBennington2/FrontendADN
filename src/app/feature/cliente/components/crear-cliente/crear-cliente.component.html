@@ -1,1 +1,92 @@
-<p>crear-cliente works!</p>
+<div class="container">
+  <h1>Registrar cliente</h1>
+  <form [formGroup]="clienteForm" (ngSubmit)="crear()">
+    <div class="row">
+      <div class="col-sm-2">
+        <label>Nit cliente</label>
+      </div>
+      <div class="col-sm-4">
+        <input
+          validar
+          type="text"
+          id="nitCliente"
+          name="nitCliente"
+          placeholder="Nit cliente"
+          class="form-control"
+          formControlName="nitCliente"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <label>Razon social</label>
+      </div>
+      <div class="col-sm-4">
+        <input
+          validar
+          type="text"
+          id="razonSocial"
+          name="razonSocial"
+          placeholder="Razon social"
+          class="form-control"
+          formControlName="razonSocial"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <label>Nombre representante</label>
+      </div>
+      <div class="col-sm-4">
+        <input
+          validar
+          type="text"
+          id="nombreRepresentante"
+          name="nombreRepresentante"
+          placeholder="Nombre representante"
+          class="form-control"
+          formControlName="nombreRepresentante"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <label>Telefono</label>
+      </div>
+      <div class="col-sm-4">
+        <input
+          validar
+          type="text"
+          id="telefono"
+          name="telefono"
+          placeholder="Telefono"
+          class="form-control"
+          formControlName="telefono"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <label>Direccion</label>
+      </div>
+      <div class="col-sm-4">
+        <input
+          validar
+          type="text"
+          id="direccion"
+          name="direccion"
+          placeholder="Direccion"
+          class="form-control"
+          formControlName="direccion"
+        />
+      </div>
+    </div>
+    
+  </form>
+  <div class="row">
+    <div class="d-grid gap-2 col-6 pt-2">
+        <button class="btn btn-primary" type="submit">guardar</button>
+        <button class="btn btn-primary" type="button">cancelar</button>
+      </div>
+</div>
+</div>
