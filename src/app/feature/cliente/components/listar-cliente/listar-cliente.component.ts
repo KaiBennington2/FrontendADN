@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { faPencilAlt, faSearch, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { Observable } from 'rxjs';
 
 import { Cliente } from '@cliente/shared/model/cliente';
 import { ClienteService } from '@cliente/shared/service/cliente.service';
@@ -13,7 +12,7 @@ import { ClienteService } from '@cliente/shared/service/cliente.service';
 export class ListarClienteComponent implements OnInit {
 
   public icons: any[] = [faSearch,faPencilAlt,faTrashAlt];
-  public listaClientes: Observable<Cliente[]>;
+  public listaClientes: Cliente[];
 
   public pagActual: number = 0;
   public totalClientes: number = 0;
@@ -24,17 +23,14 @@ export class ListarClienteComponent implements OnInit {
   constructor(protected clienteService: ClienteService) { }
 
   ngOnInit(): void {
-    this.listaClientes = this.clienteService.consultar();
-    this.listaClientes.subscribe(result => {this.totalClientes= result.length});
+    this.clienteService.consultar().subscribe(result => {
+      this.listaClientes= result;
+      this.totalClientes= result.length;
+    });
   }
 
   eliminarCliente(id: number): void {
-    this.clienteService.eliminar(id);
+    this.clienteService.eliminar(id).subscribe();
   }
-
-  modificarCliente(id: number): void {
-    alert("modificar"+id);
-  }
-
 
 }

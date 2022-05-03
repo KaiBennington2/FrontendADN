@@ -1,9 +1,9 @@
 <div class="kb">
     <div class="kb-brand">
-      <app-title-h1 [tipo]="'primary'" texto="Listado Clientes"></app-title-h1>
+      <app-title-h1 [tipo]="'primary'" texto="Listado Contratos"></app-title-h1>
       <div class="kb-brand__actions">
         <button class="kb-brand__actions-buttons" 
-          routerLink="/cliente/crear">
+          routerLink="/contrato/crear">
           Nuevo
         </button>
       </div>
@@ -12,56 +12,61 @@
       <div class="col-sm-3">
         <div class="kb-filter__form">
           <fa-icon [icon]="icons[0]"></fa-icon>
-          <label class="visually-hidden" for="buscar cliente">Filtro</label>
+          <label class="visually-hidden" for="buscar contrato">Filtro</label>
           <input
             type="text"
             id="filterCustomer"
             autocomplete="off"
-            placeholder="Filtrar Cliente"
+            placeholder="Filtrar contrato"
             data-bs-toggle="tooltip"
-            title="Filtrar cliente por nombre o nit"
-            #cliente          
+            title="Filtrar contrato por nombre o nit"
+            #contrato          
             [(ngModel)]="buscar"          
           />
         </div>
       </div>
     </div>
-    <div class="kb-content" *ngIf="totalClientes; else loaderComponent;">
+    <div class="kb-content" *ngIf="totalContratos; else loaderComponent;">
       <div class="table-responsive">
         <table class="table">
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">nit</th>
-              <th scope="col">Razon social</th>
-              <th scope="col">Nombre representante</th>
-              <th scope="col">telefono</th>
-              <th scope="col">direccion</th>
+              <th scope="col">nit cliente</th>
+              <th scope="col">tiempo contrato (meses)</th>
+              <th scope="col">tipoMoneda</th>
+              <th scope="col">TRM aplicada</th>
+              <th scope="col">paquete</th>
+              <th scope="col">fecha Instalacion</th>
+              <th scope="col">fecha corte</th>
               <th scope="col" colspan="2">acciones</th>
             </tr>
           </thead>
           <tbody>
             <tr
               *ngFor="
-                let cliente of listaClientes           
-                  | filtroTablaCliente:pagActual:maxPorPag: buscar;
+                let contrato of listaContratos
+                  | async                
+                  | filtroTablaContrato:pagActual:maxPorPag: buscar;
                   let i = index
               "
             >
               <th scope="row">{{ i+1 }}</th>
-              <td>{{ cliente.nitCliente }}</td>
-              <td>{{ cliente.razonSocial }}</td>
-              <td>{{ cliente.nombreRepresentante }}</td>
-              <td>{{ cliente.telefono }}</td>
-              <td>{{ cliente.direccion }}</td>
+              <td>{{ contrato.nitCliente }}</td>
+              <td>{{ contrato.tiempoContratoMeses }}</td>
+              <td>{{ contrato.tipoMoneda }}</td>
+              <td>{{ contrato.trmAplicada }}</td>
+              <td>{{ contrato.paquete }}</td>
+              <td>{{ contrato.fechaInstalacion }}</td>
+              <td>{{ contrato.fechaCorte }}</td>
               <td>
-                <button class="btn btn-warning" routerLink="/cliente/editar/{{cliente.id}}">
-                  <fa-icon [icon]="icons[1]"></fa-icon>
+                <button class="btn btn-warning">
+                  <fa-icon [icon]="icons[1]" (click)="modificarContrato(contrato.id)"></fa-icon>
                   Editar
                 </button>
               </td>
               <td>
-                <button class="btn btn-danger" (click)="eliminarCliente(cliente.id)">
+                <button class="btn btn-danger" (click)="eliminarContrato(contrato.id)">
                   <fa-icon [icon]="icons[2]"></fa-icon>
                   Eliminar
                 </button>
@@ -74,11 +79,14 @@
             [(page)]="pagActual"
             [pageSize]="maxPorPag"
             [maxSize]="4"
-            [collectionSize]="totalClientes"
+            [collectionSize]="totalContratos"
           ></ngb-pagination>
+        
+          
         </div>
       </div>
     </div>
+  
     <ng-template #loaderComponent>
       <div class="col-12 text-center">
         <h6>Cargando...</h6>

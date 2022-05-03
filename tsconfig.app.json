@@ -14,6 +14,9 @@
       "@home/*": [
         "src/app/feature/home/*"
       ],
+      "@feature/*": [
+        "src/app/feature/*"
+      ],
       "@producto/*": [
         "src/app/feature/producto/*"
       ],
