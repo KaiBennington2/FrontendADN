@@ -1,20 +1,19 @@
 <div class="container">
   <h1>Registrar contratos</h1>
-  <form [formGroup]="contratoForm" (ngSubmit)="guardar()">
+  <form [formGroup]="contratoForm">
     <div class="row">
       <div class="col-sm-2">
         <label for="Cliente">cliente</label>
       </div>
       <div class="col-sm-4">
         <select
-          validar
           class="form-select"
           aria-label="seleccione Cliente"
           formControlName="nitCliente"
         >
           <option [ngValue]="null" selected>Selecione...</option>
           <option
-            *ngFor="let cliente of listaClientes | async"
+            *ngFor="let cliente of listaClientes"
             [ngValue]="cliente.nitCliente"
           >
             {{ cliente.razonSocial }}
@@ -28,12 +27,11 @@
       </div>
       <div class="col-sm-4">
         <select
-          validar
           class="form-select"
           aria-label="seleccione tipo moneda"
           formControlName="tipoMoneda"
         >
-          <option selected>Selecione...</option>
+          <option value="" selected>Selecione...</option>
           <option value="USD">USD</option>
           <option value="COP">COP</option>
         </select>
@@ -60,12 +58,11 @@
       </div>
       <div class="col-sm-4">
         <select
-          validar
           class="form-select"
           aria-label="seleccione paquete"
           formControlName="paquete"
         >
-          <option selected>Selecione...</option>
+          <option value="" selected>Selecione...</option>
           <option value="basic">BASIC</option>
           <option value="compact">COMPACT</option>
           <option value="premium">PREMIUM</option>
@@ -88,7 +85,18 @@
     </div>
     <div class="row">
       <div class="d-grid gap-2 col-6 pt-2">
-        <button class="btn btn-primary btn-block">guardar</button>
+        <button
+         class="btn btn-primary btn-block"
+         type="button"
+         [disabled]="!contratoForm.valid"
+         (click)="guardar()"
+        >Guardar</button>
+
+        <button
+         class="btn btn-primary btn-block"
+         type="button"
+         (click)="cancelar()"
+        >Cancelar</button>
       </div>
     </div>
   </form>

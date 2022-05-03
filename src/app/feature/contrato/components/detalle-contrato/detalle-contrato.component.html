@@ -1,0 +1,33 @@
+
+    
+
+    <div class="modal-body">
+        <p>
+            Señores, <strong>{{ cliente?.razonSocial }}</strong> identificados con el Nit <strong>{{cliente?.nitCliente}}</strong>,
+            representados por <strong>{{ cliente?.nombreRepresentante }}</strong>. <br>
+            En calidad responsable del Sector de Seguridad Privada de contratos; se estipula que ustedes han firmado
+            y tomado la prestacion de servicios: <br>
+            - paquete de servicio: <strong>{{ detalleContrato.paquete }}</strong>, por un tiempo minimo de <strong>{{ detalleContrato.tiempoContratoMeses }}</strong> meses, 
+            Acordado para pagar en <strong>{{ detalleContrato.tipoMoneda == 'USD' ? 'Dolares' : 'Pesos' }}</strong> bajo la TRM aplicada de 
+            <strong>{{ detalleContrato.trmAplicada }}</strong>, por un valor de <strong>{{detalleContrato.valorContrato | currency}}</strong> 
+            <strong>{{ detalleContrato.tipoMoneda == 'USD' ? 'Dolares' : 'Pesos' }}</strong>, 
+            servicio el cual se instalo en: <strong>{{detalleContrato.fechaInstalacion}}</strong>. <br>
+            vigencia : <br>
+            - fecha de corte: <strong>{{ detalleContrato.fechaCorte | date }}</strong><br>
+            - fecha de corte anterior: <strong>{{ detalleContrato.fechaCorteAnterior | date }}</strong>
+            <br><br>
+            Queremos manifestar nuestro agradecimiento por elegir de nuestros servicios y de ante mano 
+            darle certeza de que sus datos seran tratados de manera privada.
+            <br><br>
+            Atentamente.
+            <br><br>
+            Firma.
+        </p>    
+    </div>
+    
+    
+    
+
+
+
+  

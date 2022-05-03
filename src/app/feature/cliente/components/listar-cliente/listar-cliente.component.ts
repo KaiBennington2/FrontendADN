@@ -4,6 +4,8 @@ import { faPencilAlt, faSearch, faTrashAlt } from '@fortawesome/free-solid-svg-i
 import { Cliente } from '@cliente/shared/model/cliente';
 import { ClienteService } from '@cliente/shared/service/cliente.service';
 
+const ELIMINADO = 'El cliente fue eliminado con exito.';
+
 @Component({
   selector: 'app-listar-cliente',
   templateUrl: './listar-cliente.component.html',
@@ -23,6 +25,10 @@ export class ListarClienteComponent implements OnInit {
   constructor(protected clienteService: ClienteService) { }
 
   ngOnInit(): void {
+    this.llenarListaClientes();
+  }
+
+  private llenarListaClientes(){
     this.clienteService.consultar().subscribe(result => {
       this.listaClientes= result;
       this.totalClientes= result.length;
@@ -30,7 +36,14 @@ export class ListarClienteComponent implements OnInit {
   }
 
   eliminarCliente(id: number): void {
-    this.clienteService.eliminar(id).subscribe();
+    this.clienteService.eliminar(id).subscribe(r=> {
+      if (r.error) {
+        alert(r.data.mensaje);
+      }else {
+        alert(ELIMINADO);
+        this.llenarListaClientes();
+      }
+    });
   }
 
 }

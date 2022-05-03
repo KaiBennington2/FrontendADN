@@ -6,6 +6,7 @@ import { CrearContratoComponent } from './components/crear-contrato/crear-contra
 import { ListarContratoComponent } from './components/listar-contrato/listar-contrato.component';
 import { SharedModule } from '@shared/shared.module';
 import { FiltroTablaClass } from './components/listar-contrato/contrato-filtro-pipe-class';
+import { DetalleContratoComponent } from './components/detalle-contrato/detalle-contrato.component';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { FiltroTablaClass } from './components/listar-contrato/contrato-filtro-p
     ContratoComponent,
     CrearContratoComponent,
     ListarContratoComponent,
-    FiltroTablaClass
+    FiltroTablaClass,
+    DetalleContratoComponent
   ],
   imports: [
     SharedModule,

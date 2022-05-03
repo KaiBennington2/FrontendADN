@@ -1,5 +1,5 @@
 <div class="container">
-  <h1>Registrar cliente</h1>
+  <app-title-h1 [tipo]="'primary'" texto="Registrar Clientes"></app-title-h1>
   <form [formGroup]="clienteForm" >
     <div class="row">
       <div class="col-sm-2">
@@ -83,10 +83,19 @@
     </div>
     <div class="row">
       <div class="d-grid gap-2 col-6 pt-2">
-          <button class="btn btn-primary" type="button" [disabled]="!clienteForm.valid" (click)="EjecutarAccion()">{{isCrear ? 'guardar' : 'Actualizar'}}</button>
-          <button class="btn btn-primary" type="button" routerLink="/cliente">cancelar</button>
+          <button 
+            class="btn btn-primary"
+            type="button"
+            [disabled]="!clienteForm.valid"
+            (click)="ejecutarAccion()"
+          >{{isCrear ? 'guardar' : 'Actualizar'}}</button>
+
+          <button 
+            class="btn btn-primary"
+            type="button"
+            (click)="cancelar()"
+          >cancelar</button>
         </div>
-  </div>
-  </form>
-  
+    </div>
+  </form>  
 </div>

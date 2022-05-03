@@ -19,7 +19,7 @@
             autocomplete="off"
             placeholder="Filtrar contrato"
             data-bs-toggle="tooltip"
-            title="Filtrar contrato por nombre o nit"
+            title="Filtrar contrato por paquete o nit"
             #contrato          
             [(ngModel)]="buscar"          
           />
@@ -45,8 +45,7 @@
           <tbody>
             <tr
               *ngFor="
-                let contrato of listaContratos
-                  | async                
+                let contrato of listaContratos              
                   | filtroTablaContrato:pagActual:maxPorPag: buscar;
                   let i = index
               "
@@ -60,9 +59,9 @@
               <td>{{ contrato.fechaInstalacion }}</td>
               <td>{{ contrato.fechaCorte }}</td>
               <td>
-                <button class="btn btn-warning">
-                  <fa-icon [icon]="icons[1]" (click)="modificarContrato(contrato.id)"></fa-icon>
-                  Editar
+                <button class="btn btn-outline-info" (click)="getDetalleContrato(contrato.id,content)">
+                  <fa-icon [icon]="icons[1]"></fa-icon>
+                  Ver Detalles
                 </button>
               </td>
               <td>
@@ -80,12 +79,23 @@
             [pageSize]="maxPorPag"
             [maxSize]="4"
             [collectionSize]="totalContratos"
-          ></ngb-pagination>
-        
-          
+          ></ngb-pagination>          
         </div>
       </div>
     </div>
+    
+    <ng-template #content let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Detalle de contrato</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+      </div>
+
+      <app-detalle-contrato [detalleContrato]="detalleContrato"></app-detalle-contrato>   
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="c('Listo click')">Listo</button>
+      </div> 
+    </ng-template>   
   
     <ng-template #loaderComponent>
       <div class="col-12 text-center">
