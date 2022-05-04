@@ -17,9 +17,6 @@
       "@feature/*": [
         "src/app/feature/*"
       ],
-      "@producto/*": [
-        "src/app/feature/producto/*"
-      ],
       "@cliente/*": [
         "src/app/feature/cliente/*"
       ],
