@@ -7,18 +7,26 @@ export class DetalleContrato extends Contrato {
     valorContrato: number;
 
     constructor(
-        id: number,
-        nitCliente: string,
-        tiempoContratoMeses: number,
-        tipoMoneda: string,
-        trmAplicada: number,
-        paquete: string,
-        fechaInstalacion: Date,
+        // id: number,
+        // nitCliente: string,
+        // tiempoContratoMeses: number,
+        // tipoMoneda: string,
+        // trmAplicada: number,
+        // paquete: string,
+        // fechaInstalacion: Date,
+        contrato: Contrato,
         fechaCorte: Date,
         fechaCorteAnterior: Date,
         valorContrato: number
         ) {
-        super(id, nitCliente, tiempoContratoMeses, tipoMoneda, trmAplicada, paquete, fechaInstalacion);
+        super(
+            contrato.id,
+            contrato.nitCliente,
+            contrato.tiempoContratoMeses,
+            contrato.tipoMoneda,
+            contrato.trmAplicada,
+            contrato.paquete,
+            contrato.fechaInstalacion);
         this.fechaCorte = fechaCorte;
         this.fechaCorteAnterior = fechaCorteAnterior;
         this.valorContrato = valorContrato;

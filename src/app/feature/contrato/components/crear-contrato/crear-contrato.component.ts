@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Cliente } from '@feature/cliente/shared/model/cliente';
 import { ClienteService } from '@feature/cliente/shared/service/cliente.service';
 import { Contrato } from '@feature/contrato/shared/model/contrato';
@@ -22,19 +22,16 @@ export class CrearContratoComponent implements OnInit {
   listaClientes: Cliente[];
   totalClientes: number;
   contrato: Contrato;
-  id: number;
+  rspService: { error: boolean, msg: string, data: any } = {error:false, msg: '', data: null};
 
   ngOnInit(): void {
     this.construirFormularioContrato();
-    this.llenarListaClientes();    
-    this.getContratoById(this.id); 
+    this.llenarListaClientes();
   }
 
   constructor(protected clienteService: ClienteService,
               protected contratoService: ContratoService,
-              private route: ActivatedRoute,
               private router: Router ) {
-    this.id = this.route.snapshot.params['id'];
   }  
 
   private construirFormularioContrato() {
@@ -56,29 +53,16 @@ export class CrearContratoComponent implements OnInit {
     });
   }
 
-  private getContratoById(id: number){
-    this.contratoService.getContratoById(id).subscribe(result => { this.llenarContratoForm(result.data)})
-  }
-
-  private llenarContratoForm(contrato: Contrato){
-    this.contratoForm.controls['id'].setValue(contrato.id);
-    this.contratoForm.controls['nitCliente'].setValue(contrato.nitCliente);
-    this.contratoForm.controls['tiempoContratoMeses'].setValue(contrato.tiempoContratoMeses);
-    this.contratoForm.controls['tipoMoneda'].setValue(contrato.tipoMoneda);
-    this.contratoForm.controls['trmAplicada'].setValue(contrato.trmAplicada);
-    this.contratoForm.controls['paquete'].setValue(contrato.paquete.toLowerCase());
-    this.contratoForm.controls['fechaInstalacion'].setValue(contrato.fechaInstalacion);
-  }
-
-  guardar() {
+  guardar() {    
     this.contratoService.guardar(this.contratoForm.value).subscribe( r => {
-      if (r.error) {
-        alert(r.data.mensaje); return;
+      this.rspService = r;
+      if (this.rspService.error) {
+        alert(this.rspService.data.mensaje); return;
       }else {
         alert(CREADO);
         this.router.navigateByUrl(REDIRECCION_A_LISTADO);
       }
-    }); 
+    });
   }
 
   cancelar(){

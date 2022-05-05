@@ -4,7 +4,7 @@ import { HttpService } from '@core/services/http.service';
 
 import { ClienteService } from './cliente.service';
 
-describe('ClienteService', () => {
+describe('(4) - Test del Servicio "ClienteService"', () => {
   let service: ClienteService;
 
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('ClienteService', () => {
     service = TestBed.inject(ClienteService);
   });
 
-  it('should be created', () => {
+  it('deberia ser creado', () => {
     expect(service).toBeTruthy();
   });
 });

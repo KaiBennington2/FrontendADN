@@ -13,6 +13,7 @@ export class DetalleContratoComponent implements OnInit{
   @Input() detalleContrato: DetalleContrato;
 
   cliente: Cliente;
+  rspService: { error: boolean, msg: string, data: any };
 
   constructor(protected clienteService: ClienteService) { }
 
@@ -24,10 +25,11 @@ export class DetalleContratoComponent implements OnInit{
 
   private llenarCliente() {
     this.clienteService.obtenerPorNit(this.detalleContrato.nitCliente).subscribe(r => {
-      if (r.error) {
-        alert(r.msg);
+      this.rspService = r;
+      if (this.rspService.error) {
+        alert(this.rspService.msg);
       }else{
-        this.cliente = r.data;
+        this.cliente = this.rspService.data;
       }
     });    
   }

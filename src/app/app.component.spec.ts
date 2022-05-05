@@ -26,5 +26,11 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('app-base');
   });
 
+  it(`deberia contar el numero de modulos en el menu`, () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.debugElement.componentInstance;
+    expect(3).toEqual(app.companies.length);
+  });
+
 
 });

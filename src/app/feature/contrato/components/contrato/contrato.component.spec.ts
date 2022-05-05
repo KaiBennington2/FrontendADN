@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ContratoComponent } from './contrato.component';
 
-describe('ContratoComponent', () => {
+describe('(5) - Test del componente "ContratoComponent"', () => {
   let component: ContratoComponent;
   let fixture: ComponentFixture<ContratoComponent>;
 
@@ -19,7 +19,7 @@ describe('ContratoComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('deberia crear componente', () => {
     expect(component).toBeTruthy();
   });
 });
