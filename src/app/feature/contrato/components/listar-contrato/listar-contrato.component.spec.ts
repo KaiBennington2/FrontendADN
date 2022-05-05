@@ -1,25 +1,25 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+// import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ListarContratoComponent } from './listar-contrato.component';
+// import { ListarContratoComponent } from './listar-contrato.component';
 
 describe('ListarContratoComponent', () => {
-  let component: ListarContratoComponent;
-  let fixture: ComponentFixture<ListarContratoComponent>;
+  // let component: ListarContratoComponent;
+  // let fixture: ComponentFixture<ListarContratoComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ ListarContratoComponent ]
-    })
-    .compileComponents();
-  });
+  // beforeEach(async () => {
+  //   await TestBed.configureTestingModule({
+  //     declarations: [ ListarContratoComponent ]
+  //   })
+  //   .compileComponents();
+  // });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ListarContratoComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  // beforeEach(() => {
+  //   fixture = TestBed.createComponent(ListarContratoComponent);
+  //   component = fixture.componentInstance;
+  //   fixture.detectChanges();
+  // });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  // it('should create', () => {
+  //   expect(component).toBeTruthy();
+  // });
 });

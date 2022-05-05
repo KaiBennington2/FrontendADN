@@ -1,51 +1,22 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+
 import { HttpService } from '@core/services/http.service';
-import { Cliente } from '@feature/cliente/shared/model/cliente';
-import { ClienteService } from '@feature/cliente/shared/service/cliente.service';
-import { of } from 'rxjs';
+import { ClienteService } from '@cliente/shared/service/cliente.service';
 
 import { CrearClienteComponent } from './crear-cliente.component';
+import { Cliente } from '@feature/cliente/shared/model/cliente';
+import { of } from 'rxjs';
 
-describe('(1) - Test del componente "CrearClienteComponent"', () => {
+describe('(3) - Test del componente "CrearClienteComponent"', () => {
   let component: CrearClienteComponent;
   let fixture: ComponentFixture<CrearClienteComponent>;
   let clienteService: ClienteService;
-  let listaClientes: Cliente[] = [
-    {
-      "id": 1,
-      "nitCliente": "12345678",
-      "razonSocial": "Pruebas S.A.S.",
-      "nombreRepresentante": "Kai Bennington",
-      "telefono": "3013101550",
-      "direccion": "Cll 000 # 01 - 04"
-    },
-    {
-      "id": 2,
-      "nitCliente": "0987654",
-      "razonSocial": "Tests S.A.S.T",
-      "nombreRepresentante": "Alonso Bennington",
-      "telefono": "3023111660",
-      "direccion": "Cll 111 # 03 - 04"
-    },
-    {
-      "id": 3,
-      "nitCliente": "1029384",
-      "razonSocial": "Empresa S.A.S.",
-      "nombreRepresentante": "Cliente Prueba",
-      "telefono": "3023013065",
-      "direccion": "Cll 222 # 13 - 24"
-    },
-    {
-      "id": 5,
-      "nitCliente": "1234567",
-      "razonSocial": "Pruebas S.A.S.",
-      "nombreRepresentante": "Kai Bennington",
-      "telefono": "3013101550",
-      "direccion": "Cll 000 # 01 - 02"
-    }
-  ];
+  let clienteTest: Cliente;
+  let mockRsp: { error: boolean, msg: string, data: Cliente };
+  
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -53,9 +24,24 @@ describe('(1) - Test del componente "CrearClienteComponent"', () => {
         CrearClienteComponent
       ],
       imports: [
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        RouterTestingModule,
+        
       ],
-      providers: [ClienteService, HttpService, ActivatedRoute, Router]
+      providers: [
+        HttpService,
+        ClienteService,
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              params: {
+                  id: null
+              },
+            },
+          },
+        }
+        ]
     })
     .compileComponents();
   });
@@ -64,13 +50,58 @@ describe('(1) - Test del componente "CrearClienteComponent"', () => {
     fixture = TestBed.createComponent(CrearClienteComponent);
     component = fixture.componentInstance;
     clienteService = TestBed.inject(ClienteService);
-    spyOn(clienteService, 'consultar').and.returnValue(of(listaClientes));
+    clienteTest = new Cliente( 1, "12345678", "Pruebas S.A.S.", "Kai Bennington", "3013101550", "Cll 000 # 01 - 04");
+    mockRsp = {error:true, msg: "", data: clienteTest};
+    spyOn(clienteService, 'obtenerPorId').and.returnValue(of(mockRsp));
+    
     fixture.detectChanges();
     
   });
 
   it('deberia crear componente', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('formulario deberia ser invalido por falta de campo Obligatorio', () => {
+    expect(component.clienteForm.valid).toBeFalsy();
+  });
+
+  it('formulario deberia ser valido', () => {
+    expect(component.clienteForm.valid).toBeFalsy();
+    component.clienteForm.controls['id'].setValue(clienteTest.id);
+    component.clienteForm.controls['nitCliente'].setValue(clienteTest.nitCliente);
+    component.clienteForm.controls['razonSocial'].setValue(clienteTest.razonSocial);
+    component.clienteForm.controls['nombreRepresentante'].setValue(clienteTest.nombreRepresentante);
+    component.clienteForm.controls['telefono'].setValue(clienteTest.telefono);
+    component.clienteForm.controls['direccion'].setValue(clienteTest.direccion);
+
+    expect(component.clienteForm.valid).toBeTrue();
+  });
+
+  it('deberia guardar un cliente', () => {
+    component.clienteForm.controls['id'].setValue(clienteTest.id);
+    component.clienteForm.controls['nitCliente'].setValue(clienteTest.nitCliente);
+    component.clienteForm.controls['razonSocial'].setValue(clienteTest.razonSocial);
+    component.clienteForm.controls['nombreRepresentante'].setValue(clienteTest.nombreRepresentante);
+    component.clienteForm.controls['telefono'].setValue(clienteTest.telefono);
+    component.clienteForm.controls['direccion'].setValue(clienteTest.direccion);
+
+    component.ejecutarAccion();
+    expect(component.isCrear).toBeTrue();
+  });
+
+
+  it('deberia Actualizar un cliente', () => {
+    component.clienteForm.controls['id'].setValue('111');
+    component.clienteForm.controls['nitCliente'].setValue(clienteTest.nitCliente);
+    component.clienteForm.controls['razonSocial'].setValue('Razon Social Prueba S.A.S');
+    component.clienteForm.controls['nombreRepresentante'].setValue('User Test');
+    component.clienteForm.controls['telefono'].setValue(clienteTest.telefono);
+    component.clienteForm.controls['direccion'].setValue(clienteTest.direccion);
+
+    component.isCrear = false;
+    component.ejecutarAccion();
+    expect(component.isCrear).toBeFalse();
   });
   
 });

@@ -46,7 +46,7 @@ export class CrearClienteComponent implements OnInit {
       telefono: new FormControl('', [Validators.required]),
       direccion: new FormControl('', [Validators.required])
     });
-  }  
+  }
 
   getClienteById(id: number): void {
     this.clienteService.obtenerPorId(id).subscribe(r => {
@@ -70,23 +70,30 @@ export class CrearClienteComponent implements OnInit {
 
   ejecutarAccion() {    
     if (this.isCrear) {
-      this.clienteService.guardar(this.clienteForm.value).subscribe(r => {
-        if (r.error) {
-          alert(r.data.mensaje); return;
-        } else {
-          alert(CREADO);
-          this.router.navigateByUrl(REDIRECCION_A_LISTADO);
-        }
-      });
+      this.guardar();
     } else {
-      this.clienteService.modificar(this.clienteForm.value).subscribe(r => {
-        if (r.error) {
-          alert(r.data.mensaje); return;
-        } else {
-          alert(MODIFICADO);
-          this.router.navigateByUrl(REDIRECCION_A_LISTADO);
-        }
-      });
+      this.modificar();
+    }
+  }
+
+   guardar(){
+    this.clienteService.guardar(this.clienteForm.value).subscribe(r => {
+      this.respuesta(r,CREADO,REDIRECCION_A_LISTADO);
+    });
+  }
+
+  private modificar(){
+    this.clienteService.modificar(this.clienteForm.value).subscribe(r => {
+      this.respuesta(r,MODIFICADO,REDIRECCION_A_LISTADO);
+    });
+  }
+
+  private respuesta(r: {error: boolean, msg: string, data: any},respuestaExitosa: string, redireccion: string){
+    if (r.error) {
+      alert(r.data.mensaje); return;
+    } else {
+      alert(respuestaExitosa);
+      this.router.navigateByUrl(redireccion);
     }
   }
 

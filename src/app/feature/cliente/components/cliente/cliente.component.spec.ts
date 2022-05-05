@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ClienteComponent } from './cliente.component';
 
-describe('ClienteComponent', () => {
+describe('(1) - Test del componente "ClienteComponent"', () => {
   let component: ClienteComponent;
   let fixture: ComponentFixture<ClienteComponent>;
 
@@ -19,7 +19,7 @@ describe('ClienteComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('deberia crear componente', () => {
     expect(component).toBeTruthy();
   });
 });
