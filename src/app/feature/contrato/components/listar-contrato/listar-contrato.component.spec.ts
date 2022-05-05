@@ -1,25 +1,35 @@
-// import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpService } from '@core/services/http.service';
+import { ContratoService } from '@feature/contrato/shared/service/contrato.service';
 
-// import { ListarContratoComponent } from './listar-contrato.component';
+import { ListarContratoComponent } from './listar-contrato.component';
 
 describe('ListarContratoComponent', () => {
-  // let component: ListarContratoComponent;
-  // let fixture: ComponentFixture<ListarContratoComponent>;
+  let component: ListarContratoComponent;
+  let fixture: ComponentFixture<ListarContratoComponent>;
 
-  // beforeEach(async () => {
-  //   await TestBed.configureTestingModule({
-  //     declarations: [ ListarContratoComponent ]
-  //   })
-  //   .compileComponents();
-  // });
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ ListarContratoComponent ],
+      imports: [
+        HttpClientTestingModule
+      ],
+      providers: [
+        ContratoService,
+        HttpService
+      ]
+    })
+    .compileComponents();
+  });
 
-  // beforeEach(() => {
-  //   fixture = TestBed.createComponent(ListarContratoComponent);
-  //   component = fixture.componentInstance;
-  //   fixture.detectChanges();
-  // });
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ListarContratoComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });
