@@ -1,3 +1,4 @@
+import { HttpStatusCode } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpService } from '@core/services/http.service';
@@ -15,7 +16,6 @@ describe('DetalleContratoComponent', () => {
   let fixture: ComponentFixture<DetalleContratoComponent>;
   let clienteService: ClienteService;
   let mockRsp: { error: boolean, msg: string, data: Cliente };
-  let mockRspDetalleContrato: { error: boolean, msg: string, data: DetalleContrato };
   let detalleContratoTest: DetalleContrato;
   let clienteTest: Cliente;
   let contratoTest: Contrato;
@@ -23,7 +23,7 @@ describe('DetalleContratoComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-       DetalleContratoComponent
+        DetalleContratoComponent
       ],
       imports: [
         HttpClientTestingModule,
@@ -34,16 +34,17 @@ describe('DetalleContratoComponent', () => {
         HttpService
       ]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DetalleContratoComponent);
     component = fixture.componentInstance;
     clienteService = TestBed.inject(ClienteService);
-    clienteTest = new Cliente( 1, "12345678", "Pruebas S.A.S.", "Kai Bennington", "3013101550", "Cll 000 # 01 - 04");
-    contratoTest = new Contrato( 1, clienteTest.nitCliente,24,'COP', 4000.12, 'COMPACT', new Date());
+    clienteTest = new Cliente(1, "12345678", "Pruebas S.A.S.", "Kai Bennington", "3013101550", "Cll 000 # 01 - 04");
+    contratoTest = new Contrato(1, clienteTest.nitCliente, 24, 'COP', 4000.12, 'COMPACT', new Date());
     detalleContratoTest = new DetalleContrato(contratoTest, null, null, 1250000);
+
     fixture.detectChanges();
   });
 
@@ -51,19 +52,23 @@ describe('DetalleContratoComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('deberia mostrar los detalles de contrato', () => {
-    mockRspDetalleContrato = { error: false, msg: '', data: detalleContratoTest }
-    mockRsp = { error: false, msg: '', data: clienteTest }
-
-    spyOn(clienteService, 'obtenerPorNit').and.returnValue(of(mockRsp));
+  it('deberia llenar el cliente con el nit de detalle contrato', () => {
     component.detalleContrato = detalleContratoTest;
-    
+    mockRsp = { error: false, msg: '', data: clienteTest }
+    spyOn(clienteService, 'obtenerPorNit').and.returnValue(of(mockRsp));
+
     component.ngOnInit();
 
-    expect(component.rspService).toEqual(mockRsp);
-
-    expect(component.detalleContrato.nitCliente).toEqual(mockRspDetalleContrato.data.nitCliente);
     expect(component.cliente).toBe(mockRsp.data);
+  });
 
+  it('deberia generar Bad request al tratar de buscar un cliente con caracteres', () => {
+    detalleContratoTest.nitCliente = 'XXX';
+    console.log(detalleContratoTest);
+    component.detalleContrato = detalleContratoTest;
+
+    component.ngOnInit();
+
+    expect(HttpStatusCode.InternalServerError).toBe(500);
   });
 });

@@ -1,23 +1,38 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { of } from "rxjs";
+import { environment } from 'src/environments/environment';
+import { Observable, of } from "rxjs";
 import { HttpService } from "./http.service";
+import { catchError, map } from "rxjs/operators";
+import { respuestaHttpApi } from "./IHttpResponseApi";
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class HttpApiErrorClass {
 
-    constructor(protected http: HttpService) { }
+  response = { error: false, msg: '', data: null };
+  env: string = `${environment.endpoint}`;
 
-    error(error: HttpErrorResponse) {
-        let mensajeError = '';
-        if (error.error instanceof ErrorEvent) {
-          mensajeError = error.error.message;
-        } else {
-          mensajeError = `Codigo de Error: ${error.status} \n mensaje: ${error.error.mensaje}`;
-        }
-        return of({ error: true, msg: mensajeError, data: error.error });
+  constructor(protected http: HttpService) { }
+
+  error(error: HttpErrorResponse) {
+    let mensajeError = '';
+    if (error.error instanceof ErrorEvent) {
+      mensajeError = error.error.message;
+    } else {
+      mensajeError = `Codigo de Error: ${error.status} \n mensaje: ${error.error.mensaje}`;
     }
+    return of({ error: true, msg: mensajeError, data: error.error });
+  }
+
+  mapearRespuesta(rsp: Observable<respuestaHttpApi<any>>): Observable<respuestaHttpApi<any>> {
+    return rsp.pipe(
+      map(r => {
+        this.response.data = r;
+        return this.response;
+      }), catchError(this.error)
+    );
+  }
 
 }

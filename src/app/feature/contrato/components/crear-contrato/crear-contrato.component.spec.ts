@@ -17,6 +17,7 @@ describe('(7) - Test del componente "CrearContratoComponent"', () => {
   let clienteService: ClienteService;
   let contratoService: ContratoService;
   let contratoTest: Contrato;
+  let CREADO = 'El contrato fue guardado de manera exitosa.';
   let mockRsp: { error: boolean, msg: string, data: any };
 
   let mockListaClientes: Cliente[] = [
@@ -56,7 +57,7 @@ describe('(7) - Test del componente "CrearContratoComponent"', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('deberia crear componente', () => {
     expect(component).toBeTruthy();
   });
 
@@ -78,9 +79,9 @@ describe('(7) - Test del componente "CrearContratoComponent"', () => {
   });
 
   it('deberia guardar un contrato', () => {
-    mockRsp = {error:false, msg: '', data: null};
+    mockRsp = { error: false, msg: '', data: null }
     spyOn(contratoService, 'guardar').and.returnValue(of(mockRsp));
-    
+    spyOn(window, 'alert');
     component.contratoForm.controls['id'].setValue(contratoTest.id);
     component.contratoForm.controls['nitCliente'].setValue(contratoTest.nitCliente);
     component.contratoForm.controls['tiempoContratoMeses'].setValue(contratoTest.tiempoContratoMeses);
@@ -90,14 +91,19 @@ describe('(7) - Test del componente "CrearContratoComponent"', () => {
     component.contratoForm.controls['fechaInstalacion'].setValue(contratoTest.fechaInstalacion);
 
     component.guardar();
-    spyOn(window, "alert");
-    var oldalert = alert;
-      oldalert = jasmine.createSpy();
-    expect(component.rspService.msg).toEqual(mockRsp.msg);    
-    expect(window.alert).toHaveBeenCalledWith("expected message");
+
+    expect(window.alert).toHaveBeenCalledWith(CREADO);
+    
   });
 
   it('deberia sacar error por nit vacio al tratar de guardar un contrato', () => {
+    const mockRsp = { error:true,
+                      msg: "El NIT es un requisito obligatorio.",
+                      data: { nombreExcepcion: "ExcepcionValorObligatorio", mensaje: "El NIT es un requisito obligatorio." }
+                    }
+    spyOn(contratoService, 'guardar').and.returnValue(of(mockRsp));
+    spyOn(window, 'alert');
+
     component.contratoForm.controls['id'].setValue(contratoTest.id);
     component.contratoForm.controls['nitCliente'].setValue(null);
     component.contratoForm.controls['tiempoContratoMeses'].setValue(contratoTest.tiempoContratoMeses);
@@ -106,23 +112,31 @@ describe('(7) - Test del componente "CrearContratoComponent"', () => {
     component.contratoForm.controls['paquete'].setValue(contratoTest.paquete);
     component.contratoForm.controls['fechaInstalacion'].setValue(contratoTest.fechaInstalacion);
 
-    expect(component.contratoForm.invalid).toBeTrue();
-    
-    console.log(component.rspService)
-    const mockRsp = {
-      error:false,
-      msg: "El NIT es un requisito obligatorio.",
-      data: {
-        nombreExcepcion: "ExcepcionValorObligatorio",
-        mensaje: "El NIT es un requisito obligatorio."
-      }
-    }
+    component.guardar();
 
+    expect(component.contratoForm.invalid).toBeTrue();
+    expect(window.alert).toHaveBeenCalledWith(mockRsp.msg);
+  });
+
+  it('deberia sacar error por paquete de contrato invalido', () => {
+    const mockRsp = { error:true,
+                      msg: "El paquete de contrato es inválido.",
+                      data: { nombreExcepcion: "ExcepcionValorInvalido", mensaje: "El paquete de contrato es inválido." }
+                    }
     spyOn(contratoService, 'guardar').and.returnValue(of(mockRsp));
+    spyOn(window, 'alert');
+
+    component.contratoForm.controls['id'].setValue(contratoTest.id);
+    component.contratoForm.controls['nitCliente'].setValue(contratoTest.nitCliente);
+    component.contratoForm.controls['tiempoContratoMeses'].setValue(contratoTest.tiempoContratoMeses);
+    component.contratoForm.controls['tipoMoneda'].setValue(contratoTest.tipoMoneda);
+    component.contratoForm.controls['trmAplicada'].setValue(contratoTest.trmAplicada);
+    component.contratoForm.controls['paquete'].setValue('elMejor');
+    component.contratoForm.controls['fechaInstalacion'].setValue(contratoTest.fechaInstalacion);
 
     component.guardar();
-    console.log(component.rspService)
-    expect("El NIT es un requisito obligatorio.").toEqual(component.rspService.msg)
+
+    expect(window.alert).toHaveBeenCalledWith(mockRsp.data.mensaje);
   });
 
 });

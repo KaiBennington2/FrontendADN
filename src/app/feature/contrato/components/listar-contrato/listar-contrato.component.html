@@ -87,13 +87,13 @@
     <ng-template #content let-c="close" let-d="dismiss">
       <div class="modal-header">
         <h4 class="modal-title" id="modal-basic-title">Detalle de contrato</h4>
-        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+        <button type="button" id="btn-modal-close" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
       </div>
 
       <app-detalle-contrato [detalleContrato]="detalleContrato"></app-detalle-contrato>   
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="c('Listo click')">Listo</button>
+        <button type="button" id="btn-modal-ok" class="btn btn-outline-dark" (click)="c('Listo click')">Listo</button>
       </div> 
     </ng-template>   
   

@@ -22,7 +22,6 @@ export class CrearContratoComponent implements OnInit {
   listaClientes: Cliente[];
   totalClientes: number;
   contrato: Contrato;
-  rspService: { error: boolean, msg: string, data: any } = {error:false, msg: '', data: null};
 
   ngOnInit(): void {
     this.construirFormularioContrato();
@@ -55,9 +54,8 @@ export class CrearContratoComponent implements OnInit {
 
   guardar() {    
     this.contratoService.guardar(this.contratoForm.value).subscribe( r => {
-      this.rspService = r;
-      if (this.rspService.error) {
-        alert(this.rspService.data.mensaje); return;
+      if (r.error) {
+        alert(r.data.mensaje); return;
       }else {
         alert(CREADO);
         this.router.navigateByUrl(REDIRECCION_A_LISTADO);
