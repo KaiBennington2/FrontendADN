@@ -90,7 +90,11 @@ describe('(7) - Test del componente "CrearContratoComponent"', () => {
     component.contratoForm.controls['fechaInstalacion'].setValue(contratoTest.fechaInstalacion);
 
     component.guardar();
+    spyOn(window, "alert");
+    var oldalert = alert;
+      oldalert = jasmine.createSpy();
     expect(component.rspService.msg).toEqual(mockRsp.msg);    
+    expect(window.alert).toHaveBeenCalledWith("expected message");
   });
 
   it('deberia sacar error por nit vacio al tratar de guardar un contrato', () => {
